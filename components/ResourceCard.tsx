@@ -22,7 +22,7 @@ const ResourceCard = ({ id, title, image, downloadNumber, downloadLink }: Props)
               className="h-full rounded-md object-cover"
               width={384}
               height={440}
-              alt={title}
+              alt={`Cover image for ${title}`}
             />
           </div>
           <CardTitle className="text-white paragraph-semibold line-clamp-1 w-full text-left">{title}</CardTitle>
@@ -31,7 +31,7 @@ const ResourceCard = ({ id, title, image, downloadNumber, downloadLink }: Props)
       <CardContent className="flex-between mt-4 p-0">
         <div className="flex-center body-medium gap-1.5 text-white">
           <Image 
-            src="/downloads.svg" width={20} height={20} alt="download"
+            src="/downloads.svg" width={20} height={20} alt="" //By setting alt="" for purely decorative icons, you help screen readers skip over them
           />
           {downloadNumber}
         </div>
