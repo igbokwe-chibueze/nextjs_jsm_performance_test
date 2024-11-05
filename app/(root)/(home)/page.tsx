@@ -6,16 +6,32 @@ import { getResources, getResourcesPlaylist } from '@/sanity/actions'
 
 export const revalidate = 900;
 
-interface Props {
-  searchParams: { [key: string]: string | undefined }
-}
+// interface Props {
+//   searchParams: { [key: string]: string | undefined }
+// }
 
-const Page = async ({ searchParams }: Props) => {
-  const resources = await getResources({
-    query: searchParams?.query || '',
-    category: searchParams?.category || '',
-    page: '1'
-  })
+// const Page = async ({ searchParams }: Props) => {
+//   const resources = await getResources({
+//     query: searchParams?.query || '',
+//     category: searchParams?.category || '',
+//     page: '1'
+//   })
+
+  interface Props {
+    searchParams: Promise<{ [key: string]: string | undefined }>;
+  }
+
+  const Page = async ({ searchParams }: Props) => {
+    // Await the searchParams
+    const resolvedSearchParams = await searchParams;
+    const query = resolvedSearchParams.query || "";
+    const category = resolvedSearchParams.category || "";
+
+    const resources = await getResources({
+      query,
+      category,
+      page: "1",
+    });
 
   const resourcesPlaylist = await getResourcesPlaylist();
 
@@ -30,11 +46,11 @@ const Page = async ({ searchParams }: Props) => {
 
       <Filters />
 
-      {(searchParams?.query || searchParams?.category) && (
+      {(query || category) && (
         <section className="flex-center mt-6 w-full flex-col sm:mt-20">
           <Header
-            query={searchParams?.query || ''}
-            category={searchParams?.category || ''}
+            query={query || ''}
+            category={category || ''}
           />
 
           <div className="mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
