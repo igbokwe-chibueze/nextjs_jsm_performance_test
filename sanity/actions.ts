@@ -20,6 +20,7 @@ export const getResourcesPlaylist = async () => {
           downloadLink,
           "image": poster.asset->url,
           views,
+          slug,
           category
         }
       }`
@@ -57,3 +58,23 @@ export const getResources = async (params: GetResourcesParams) => {
     console.log(error);
   }
 }
+
+export const getResourceBySlug = async (slug: string) => {
+  try {
+    const resource = await readClient.fetch(
+      groq`*[_type == "resource" && slug.current == $slug][0]{
+        title,
+        _id,
+        downloadLink,
+        "image": poster.asset->url,
+        views,
+        category,
+        description // Add more fields if needed
+      }`,
+      { slug }
+    );
+    return resource;
+  } catch (error) {
+    console.log(error);
+  }
+};

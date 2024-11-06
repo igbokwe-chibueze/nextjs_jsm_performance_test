@@ -6,34 +6,21 @@ import { getResources, getResourcesPlaylist } from '@/sanity/actions'
 
 export const revalidate = 900;
 
-// interface Props {
-//   searchParams: { [key: string]: string | undefined }
-// }
-
-// const Page = async ({ searchParams }: Props) => {
-//   const resources = await getResources({
-//     query: searchParams?.query || '',
-//     category: searchParams?.category || '',
-//     page: '1'
-//   })
-
   interface Props {
     searchParams: Promise<{ [key: string]: string | undefined }>;
   }
-
+  
   const Page = async ({ searchParams }: Props) => {
-    // Await the searchParams
+    // Resolve the searchParams promise
     const resolvedSearchParams = await searchParams;
+  
+    // Extract `query` and `category` from the resolved search parameters
     const query = resolvedSearchParams.query || "";
     const category = resolvedSearchParams.category || "";
-
-    const resources = await getResources({
-      query,
-      category,
-      page: "1",
-    });
-
-  const resourcesPlaylist = await getResourcesPlaylist();
+  
+    // Fetch resources based on query and category
+    const resources = await getResources({ query, category, page: "1" });
+    const resourcesPlaylist = await getResourcesPlaylist();
 
   return (
     <main className="flex-center paddings mx-auto w-full max-w-screen-2xl flex-col">
@@ -61,6 +48,7 @@ export const revalidate = 900;
                   title={resource.title}
                   id={resource._id}
                   image={resource.image}
+                  slug={resource.slug?.current}
                   downloadNumber={resource.views}
                   downloadLink={resource.downloadLink}
                 />
@@ -79,14 +67,15 @@ export const revalidate = 900;
           <h1 className="heading3 self-start text-white-800">{item.title}</h1>
           <div className="mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
             {item.resources.map((resource: any) => (
-                <ResourceCard 
-                  key={resource._id}
-                  title={resource.title}
-                  id={resource._id}
-                  image={resource.image}
-                  downloadNumber={resource.views}
-                  downloadLink={resource.downloadLink}
-                />
+              <ResourceCard 
+                key={resource._id}
+                title={resource.title}
+                id={resource._id}
+                image={resource.image}
+                slug={resource.slug?.current}
+                downloadNumber={resource.views}
+                downloadLink={resource.downloadLink}
+              />
               ))}
           </div>
         </section>

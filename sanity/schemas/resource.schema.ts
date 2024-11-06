@@ -7,7 +7,6 @@ const schema = {
         name: 'title',
         title: 'Title',
         type: 'string',
-        require,
         validation: (Rule: any) => Rule.required()
       },
       {
@@ -15,6 +14,12 @@ const schema = {
         title: 'Slug',
         type: 'slug',
         options: { source: 'title' }
+      },
+      {
+        name: 'description',
+        title: 'Description',
+        type: 'text',
+        validation: (Rule: any) => Rule.required()
       },
       {
         name: 'downloadLink',
