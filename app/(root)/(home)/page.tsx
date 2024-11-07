@@ -7,16 +7,13 @@ import { getResources, getResourcesPlaylist } from '@/sanity/actions'
 export const revalidate = 900;
 
   interface Props {
-    searchParams: Promise<{ [key: string]: string | undefined }>;
+    searchParams: { [key: string]: string | undefined };
   }
   
   const Page = async ({ searchParams }: Props) => {
-    // Resolve the searchParams promise
-    const resolvedSearchParams = await searchParams;
-  
-    // Extract `query` and `category` from the resolved search parameters
-    const query = resolvedSearchParams.query || "";
-    const category = resolvedSearchParams.category || "";
+    // Use `searchParams` directly without awaiting it
+    const query = searchParams.query || "";
+    const category = searchParams.category || "";
   
     // Fetch resources based on query and category
     const resources = await getResources({ query, category, page: "1" });
@@ -28,6 +25,7 @@ export const revalidate = 900;
         <div className="flex-center relative min-h-[274px] w-full flex-col rounded-xl bg-banner bg-cover bg-center text-center">
           <h1 className="sm:heading1 heading2 mb-6 text-center text-white">JavaScript Mastery Resources</h1>
         </div>
+        <p>New Main</p>
         <SearchForm />
       </section>
 
