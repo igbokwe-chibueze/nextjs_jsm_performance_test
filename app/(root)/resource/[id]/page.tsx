@@ -1,18 +1,12 @@
 import { getResourceBySlug } from '@/sanity/actions';
 import Image from 'next/image';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-const page = async ({ params }: PageProps) => {
-  // Await `params` in case it's treated as a promise
-  const { id } = params;
+const page = async ({ params }: { params: { slug: string } }) => {
+ 
+  const { slug } = params;
 
   // Fetch the resource based on the slug from URL
-  const resource = await getResourceBySlug(id);
+  const resource = await getResourceBySlug(slug);
 
   // Handle the case where the resource is not found
   if (!resource) {
@@ -23,7 +17,6 @@ const page = async ({ params }: PageProps) => {
     <main className="flex-center paddings mx-auto w-full max-w-screen-2xl flex-col">
       <section className="nav-padding hero-height flex w-full flex-col items-center justify-center gap-10 lg:flex-row">
         <div className="flex flex-1 flex-col items-start justify-center">
-        <p>New Details</p>
           <p className="text-gradient_blue body-regular mb-2.5 text-center uppercase">
             JavaScript Mastery Pro Free Guide
           </p>
