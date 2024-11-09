@@ -1,7 +1,13 @@
 import { getResourceBySlug } from '@/sanity/actions';
 import Image from 'next/image';
 
-const page = async ({ params }: { params: { id: string } }) => {
+interface ResourcePageProps {
+    params: {
+      id: string;
+    };
+}
+
+const page = async ({ params }: ResourcePageProps) => {
  
   const { id } = params;
 
