@@ -6,7 +6,7 @@ import { getResources, getResourcesPlaylist } from '@/sanity/actions'
 
 export const revalidate = 300;
   
-  const Page = async ({ searchParams }: { searchParams: { [key: string]: string | undefined } }) => {
+  const Page = async ({ searchParams }: any) => {
     // Use `searchParams` directly without awaiting it
     const query = searchParams.query || "";
     const category = searchParams.category || "";
