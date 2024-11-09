@@ -1,12 +1,12 @@
 import { getResourceBySlug } from '@/sanity/actions';
 import Image from 'next/image';
 
-const page = async ({ params }: { params: { slug: string } }) => {
+const page = async ({ params }: { params: { id: string } }) => {
  
-  const { slug } = params;
+  const { id } = params;
 
   // Fetch the resource based on the slug from URL
-  const resource = await getResourceBySlug(slug);
+  const resource = await getResourceBySlug(id);
 
   // Handle the case where the resource is not found
   if (!resource) {
